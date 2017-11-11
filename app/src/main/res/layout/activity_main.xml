@@ -25,8 +25,9 @@
                     android:id="@+id/main_icon_hamburger"
                     android:src="@drawable/ic_hamburger"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="match_parent" />
                 <TextView
+                    android:layout_centerVertical="true"
                     fontPath="fonts/Roboto-Medium.ttf"
                     android:id="@+id/main_text_topbar"
                     android:layout_toRightOf="@id/main_icon_hamburger"
@@ -37,18 +38,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <ImageView
+                    android:layout_centerVertical="true"
                     android:layout_marginLeft="24dp"
                     android:id="@+id/main_icon_more"
                     android:layout_alignParentRight="true"
                     android:src="@drawable/ic_more"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="match_parent" />
                 <ImageView
+                    android:layout_centerVertical="true"
                     android:id="@+id/main_icon_search"
                     android:layout_toLeftOf="@id/main_icon_more"
                     android:src="@drawable/ic_search"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="match_parent" />
             </RelativeLayout>
 
 

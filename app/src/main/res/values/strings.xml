@@ -4,5 +4,12 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="scan_activity_discovering">Discovering</string>
-    <string name="scan_activity_no_device">No Device</string>
+    <string name="scan_activity_finish">Finished Discovery</string>
+    <string name="scan_activity_no_result">No Result</string>
+    <string name="scan_activity_mac_adr">MAC Adress:</string>
+
+    <string-array name="roles">
+        <item>Parent</item>
+        <item>Children</item>
+    </string-array>
 </resources>

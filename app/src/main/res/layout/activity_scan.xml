@@ -16,56 +16,78 @@
             android:layout_marginEnd="24dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-            <ImageView
+            <ImageButton
+                android:background="@color/transparent"
                 android:layout_marginRight="27dp"
                 android:layout_centerVertical="true"
                 android:id="@+id/scan_icon_back"
                 android:src="@drawable/ic_back"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="match_parent" />
             <TextView
+                android:layout_centerVertical="true"
                 fontPath="fonts/Roboto-Medium.ttf"
                 android:id="@+id/main_text_topbar"
                 android:layout_toEndOf="@id/scan_icon_back"
                 android:layout_toRightOf="@id/scan_icon_back"
                 android:textColor="@color/white"
                 android:textSize="20sp"
-                android:gravity="center"
+                android:gravity="center_vertical"
                 android:text="Search Device"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-            <ImageView
-                android:layout_marginStart="24dp"
-                android:layout_marginLeft="24dp"
+            <ImageButton
+                android:background="@color/transparent"
+                android:layout_centerVertical="true"
                 android:id="@+id/scan_icon_reload"
                 android:layout_alignParentRight="true"
                 android:src="@drawable/ic_reload"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="match_parent" />
         </RelativeLayout>
 
 
     </android.support.v7.widget.Toolbar>
 
     <TextView
+        android:background="@color/white"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        fontPath="fonts/Roboto-Medium.ttf"
+        android:textSize="14sp"
+        android:textColor="@color/red"
         android:text="Paired Device Lists"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <ListView
+        android:divider="@null"
+        android:dividerHeight="0dp"
         android:id="@+id/scan_paired_list_view"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </ListView>
 
     <TextView
-        android:text="New Device Lists"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:background="@color/white"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        fontPath="fonts/Roboto-Medium.ttf"
+        android:textSize="14sp"
+        android:textColor="@color/red"
+        android:text="Search Results"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"/>
 
     <ListView
+        android:divider="@null"
+        android:dividerHeight="0dp"
         android:id="@+id/scan_new_list_view"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </ListView>
 

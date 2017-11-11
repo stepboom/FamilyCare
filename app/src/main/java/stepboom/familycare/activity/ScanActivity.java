@@ -1,6 +1,7 @@
 package stepboom.familycare.activity;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
@@ -8,27 +9,35 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Set;
 
 import stepboom.familycare.Contextor;
 import stepboom.familycare.R;
+import stepboom.familycare.View.SearchBluetoothItem;
+import stepboom.familycare.adapter.ResultAdapter;
 
 public class ScanActivity extends AppCompatActivity {
 
     private ImageView reloadIcon;
     private BluetoothAdapter mBluetoothAdapter;
-    private ArrayAdapter<String> mNewDevicesArrayAdapter;
+    private ResultAdapter mNewDevicesArrayAdapter;
     private ImageView backIcon;
 
     @Override
@@ -43,11 +52,11 @@ public class ScanActivity extends AppCompatActivity {
 
         doDiscovery();
 
-        /*ActivityCompat.requestPermissions(this,
+        ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.BLUETOOTH},1);
 
         ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.BLUETOOTH_ADMIN},1);*/
+                new String[]{Manifest.permission.BLUETOOTH_ADMIN},1);
     }
 
     private void initInstances() {
@@ -63,21 +72,22 @@ public class ScanActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 mNewDevicesArrayAdapter.clear();
-                reloadIcon.setEnabled(false);
+                reloadIcon.setClickable(false);
                 doDiscovery();
             }
         });
-        ArrayAdapter<String> pairedDevicesArrayAdapter =
-                new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item);
-        mNewDevicesArrayAdapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item);
+        /*ArrayAdapter<String> pairedDevicesArrayAdapter =
+                new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item);*/
+        ResultAdapter pairedDevicesArrayAdapter = new ResultAdapter();
+        mNewDevicesArrayAdapter = new ResultAdapter();
 
         ListView pairedDevicesListView = findViewById(R.id.scan_paired_list_view);
         pairedDevicesListView.setAdapter(pairedDevicesArrayAdapter);
-        //pairedDevicesListView.setOnClickListener(mDeviceClickListener);
+        pairedDevicesListView.setOnItemClickListener(mDeviceClickListener);
 
         ListView newDevicesListView = findViewById(R.id.scan_new_list_view);
         newDevicesListView.setAdapter(mNewDevicesArrayAdapter);
-        //newDevicesListView.setOnClickListener(mDeviceClickListener);
+        newDevicesListView.setOnItemClickListener(mDeviceClickListener);
 
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         this.registerReceiver(mReceiver, filter);
@@ -91,16 +101,19 @@ public class ScanActivity extends AppCompatActivity {
 
         if(pairedDevice.size() > 0){
             for (BluetoothDevice bluetoothDevice : pairedDevice){
-                pairedDevicesArrayAdapter.add(bluetoothDevice.getName() + "\n" + bluetoothDevice.getAddress());
+                pairedDevicesArrayAdapter.add(bluetoothDevice.getName(), bluetoothDevice.getAddress());
             }
-        } else {
+        } /*else {
             pairedDevicesArrayAdapter.add(getResources().getText(R.string.scan_activity_no_device).toString());
-        }
+        }*/
 
     }
 
     private void doDiscovery(){
         Toast.makeText(Contextor.getInstance().getContext(),R.string.scan_activity_discovering,Toast.LENGTH_LONG).show();
+        mNewDevicesArrayAdapter.setDiscovering(true);
+        mNewDevicesArrayAdapter.clear();
+        mNewDevicesArrayAdapter.notifyDataSetChanged();
         if(mBluetoothAdapter.isDiscovering()){
             mBluetoothAdapter.cancelDiscovery();
         }
@@ -126,19 +139,61 @@ public class ScanActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
 
-            System.out.println(action);
-
             if(BluetoothDevice.ACTION_FOUND.equals(action)){
                 BluetoothDevice device =  intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                if(device.getBondState() != BluetoothDevice.BOND_BONDED){
-                    mNewDevicesArrayAdapter.add(device.getName() + "\n" + device.getAddress());
-                }
+                //if(device.getBondState() != BluetoothDevice.BOND_BONDED){
+                System.out.println(device.getAddress());
+                mNewDevicesArrayAdapter.add(device.getName(),device.getAddress());
+                mNewDevicesArrayAdapter.notifyDataSetChanged();
             } else if(BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
                 reloadIcon.setEnabled(true);
-                if(mNewDevicesArrayAdapter.getCount() == 0){
-                    mNewDevicesArrayAdapter.add(getResources().getText(R.string.scan_activity_no_device).toString());
-                }
+                mNewDevicesArrayAdapter.setDiscovering(false);
+                mNewDevicesArrayAdapter.notifyDataSetChanged();
+                Toast.makeText(getApplicationContext(),getResources().getString(R.string.scan_activity_finish),Toast.LENGTH_SHORT).show();
             }
+        }
+    };
+
+    private AdapterView.OnItemClickListener mDeviceClickListener
+            = new AdapterView.OnItemClickListener() {
+        public void onItemClick(AdapterView<?> av, View v, int arg2, long arg3) {
+            // Cancel discovery because it's costly and we're about to connect
+            mBluetoothAdapter.cancelDiscovery();
+
+            String info = ((SearchBluetoothItem) v).getMac();
+            String btName = ((SearchBluetoothItem) v).getName();
+            if(info.length()==0) return;
+            String address = info.substring(info.length() - 17);
+
+            final Dialog dialog = new Dialog(ScanActivity.this);
+            dialog.setContentView(R.layout.add_new_member_dialog);
+            TextInputEditText mac = dialog.findViewById(R.id.add_new_member_mac);
+            mac.setText(address);
+            mac.setEnabled(false);
+            TextInputEditText name = dialog.findViewById(R.id.add_new_member_name);
+            name.setText(btName);
+            name.requestFocus();
+            Spinner spinner = dialog.findViewById(R.id.add_new_member_spinner);
+            String [] roles = getResources().getStringArray(R.array.roles);
+            ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(getApplicationContext(),
+                    android.R.layout.simple_dropdown_item_1line,roles);
+            spinner.setAdapter(spinnerAdapter);
+            Button done = dialog.findViewById(R.id.add_new_member_done);
+            done.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.cancel();
+                    finish();
+                }
+            });
+            Button cancel = dialog.findViewById(R.id.add_new_member_cancel);
+            cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.cancel();
+                }
+            });
+            dialog.show();
         }
     };
 
