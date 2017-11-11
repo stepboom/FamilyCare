@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="all">
+        <item
+            android:id="@+id/navItem1"
+            android:icon="@drawable/ic_person"
+            android:title="All Member"/>
+        <item
+            android:id="@+id/navItem2"
+            android:icon="@drawable/ic_group"
+            android:title="Group"/>
+        <item
+            android:id="@+id/navItem3"
+            android:icon="@drawable/ic_role"
+            android:title="Role Setting"/>
+        <item
+            android:id="@+id/navItem4"
+            android:icon="@drawable/ic_how"
+            android:title="How to use"/>
+        <item
+            android:id="@+id/navItem5"
+            android:icon="@drawable/ic_setting"
+            android:title="Setting"/>
+        <item
+            android:id="@+id/navItem6"
+            android:icon="@drawable/ic_info"
+            android:title="About"/>
+    </group>
+
+</menu>

@@ -1,4 +1,4 @@
-package fragment;
+package stepboom.familycare.activity.fragment;
 
 import android.content.Context;
 import android.net.Uri;

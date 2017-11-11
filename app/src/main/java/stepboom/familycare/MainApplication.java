@@ -1,4 +1,8 @@
+package stepboom.familycare;
+
 import android.app.Application;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
  * Created by Stepboom on 10/27/2017.
@@ -12,11 +16,11 @@ public class MainApplication extends Application {
 
         //Initialize things(s) here
         Contextor.getInstance().init(getApplicationContext());
-        /*CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                .setDefaultFontPath("fonts/TH Niramit AS Bold.ttf")
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("fonts/Roboto-Regular.ttf")
                 .setFontAttrId(R.attr.fontPath)
                 .build()
-        );*/
+        );
     }
 
     @Override

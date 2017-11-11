@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="257dp">
+
+    <LinearLayout
+        android:paddingStart="24dp"
+        android:paddingLeft="24dp"
+        android:paddingBottom="16dp"
+        android:background="@color/red"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="157dp">
+            <TextView
+                fontPath="fonts/Roboto-Bold.ttf"
+                android:textSize="24dp"
+                android:layout_marginTop="90dp"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:text="Kim Taeyeon"/>
+            <LinearLayout
+                android:layout_gravity="bottom"
+                android:layout_marginTop="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    fontPath="fonts/Roboto-Medium.ttf"
+                    android:textSize="14dp"
+                    android:textColor="@color/white_overlay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="MAC Address: "/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:text="AB-CD-EF-GH-IJ-KL"
+                    android:textColor="@color/white_overlay"
+                    android:textSize="14dp" />
+            </LinearLayout>
+
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:background="@color/white_overlay"
+        android:paddingStart="24dp"
+        android:paddingLeft="24dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+        <ImageView
+            android:id="@+id/nav_icon_shield"
+            android:layout_marginRight="16dp"
+            android:src="@drawable/ic_shield"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            fontPath="fonts/Roboto-Bold.ttf"
+            android:id="@+id/nav_text_detail"
+            android:layout_toRightOf="@id/nav_icon_shield"
+            android:layout_marginRight="4dp"
+            android:textSize="16sp"
+            android:text="Protection:"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            fontPath="fonts/Roboto-Bold.ttf"
+            android:id="@+id/nav_text_status"
+            android:layout_toRightOf="@id/nav_text_detail"
+            android:textSize="16sp"
+            android:text="OFF"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Switch
+            android:id="@+id/nav_switch"
+            android:layout_marginRight="32dp"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+
+</LinearLayout>
