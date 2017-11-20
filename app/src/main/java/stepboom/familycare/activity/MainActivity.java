@@ -120,8 +120,8 @@ public class MainActivity extends AppCompatActivity {
 
         // ------ SharedPreference ------//
         String[] name_list = { "Phongpeeradej","Peerakit","Sitthichai", "Supakrit"};
-        Integer[] role_list = {0,0,0,0}; // 0 = child , 1 = adult
-        Integer[] status_list = {3,1,1,1};
+        Integer[] role_list = {0,1,0,0}; // 0 = child , 1 = adult
+        Integer[] status_list = {1,2,3,4};
         // ------ SharedPreference ------//
 
         // CustomAdapter resides in adapter folder

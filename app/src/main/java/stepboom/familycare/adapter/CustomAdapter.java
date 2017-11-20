@@ -27,20 +27,6 @@ import stepboom.familycare.util.User;
 
 public class CustomAdapter extends BaseAdapter {
 
-    //NETTO VERSION
-   /* Context mContext;
-    String[] strName;
-    Integer[] role;
-    Integer[] status;
-
-
-    public CustomAdapter(Context context, String[] strName, Integer[] role, Integer[] status) {
-        this.mContext= context;
-        this.strName = strName;
-        this.status = status;
-        this.role = role; // 0 = child , 1 = adult
-    }*/
-
    private Context mContext;
    private ArrayList<User> users;
 
@@ -114,7 +100,6 @@ public class CustomAdapter extends BaseAdapter {
                 imageView.setBackgroundResource(R.color.transparent);
             }
         }
-
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override
