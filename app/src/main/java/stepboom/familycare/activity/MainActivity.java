@@ -91,6 +91,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView disableMonitorTextView;
     private ListView enableMonitorListView;
     private ListView disableMonitorListView;
+    private CustomAdapter enableAdapter;
+    private CustomAdapter disableAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -212,6 +214,7 @@ public class MainActivity extends AppCompatActivity {
                         editor2.putString(mac.getText().toString(), detail);
                         editor2.apply();
                         dialog.cancel();
+                        setListAdapter();
                     }
                 });
                 Button cancel = dialog.findViewById(R.id.add_new_member_cancel);
@@ -510,7 +513,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onResume(){
+        setListAdapter();
+        super.onResume();
+    }
 
+    private void setListAdapter() {
         Map<String, ?> allEntries = sp2.getAll();
         ArrayList<User> userEnableList = new ArrayList<>();
         ArrayList<User> userDisableList = new ArrayList<>();
@@ -524,11 +531,10 @@ public class MainActivity extends AppCompatActivity {
             System.out.println(entry.getKey() + " : " + entry.getValue().toString());
         }
 
-        CustomAdapter enableAdapter = new CustomAdapter(MainActivity.this, userEnableList);
-        CustomAdapter disableAdapter = new CustomAdapter(MainActivity.this, userDisableList);
+        enableAdapter = new CustomAdapter(MainActivity.this, userEnableList);
+        disableAdapter = new CustomAdapter(MainActivity.this, userDisableList);
         enableMonitorListView.setAdapter(enableAdapter);
         disableMonitorListView.setAdapter(disableAdapter);
-        super.onResume();
     }
 
     private void bluetoothOn(){

@@ -40,7 +40,7 @@
             android:name=".service.FullscreenService"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/service_name"/>
-        
+
     </application>
 
 </manifest>
