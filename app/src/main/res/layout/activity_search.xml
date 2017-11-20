@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/search_layout"
+    android:background="@color/red"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_marginTop="72dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/search_image_status"
+
+        android:src="@drawable/ic_searching"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_marginTop="37dp"
+        android:layout_centerInParent="true"
+        android:layout_below="@id/search_image_status"
+        android:id="@+id/search_text_name"
+        fontPath="fonts/Roboto-Bold.ttf"
+        android:text="Sitthichai Seajie"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_marginTop="16dp"
+        android:id="@+id/search_text_lost"
+        android:layout_below="@id/search_text_name"
+        android:layout_centerInParent="true"
+        android:paddingRight="35dp"
+        android:paddingLeft="35dp"
+        android:background="@color/dark_red"
+        android:textColor="@color/white"
+        fontPath="fonts/Roboto-Bold.ttf"
+        android:textSize="48sp"
+        android:text="SEARCHING"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_marginTop="5dp"
+        android:layout_centerInParent="true"
+        android:layout_below="@id/search_text_lost"
+        android:id="@+id/search_text_rssi"
+        fontPath="fonts/Roboto-Bold.ttf"
+        android:text=""
+        android:textColor="@color/red"
+        android:textSize="20sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+    <TextView
+        android:textColor="@color/white"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="60dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/search_text_description"
+        android:text="Stop searching this member."
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        fontPath="fonts/Roboto-Bold.ttf"
+        android:textColor="@color/red"
+        android:text="Give up"
+        android:textAllCaps="false"
+        android:layout_centerInParent="true"
+        android:layout_above="@id/search_text_description"
+        android:id="@+id/search_button_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

@@ -12,13 +12,13 @@
         android:layout_width="match_parent"
         android:layout_height="64dp">
         <RelativeLayout
-            android:layout_marginRight="24dp"
-            android:layout_marginEnd="24dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <ImageButton
                 android:background="@color/transparent"
-                android:layout_marginRight="27dp"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"
+                android:layout_marginRight="17dp"
                 android:layout_centerVertical="true"
                 android:id="@+id/scan_icon_back"
                 android:src="@drawable/ic_back"
@@ -36,7 +36,10 @@
                 android:text="Search Device"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-            <ImageButton
+            <ImageView
+                android:layout_marginRight="14dp"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"
                 android:background="@color/transparent"
                 android:layout_centerVertical="true"
                 android:id="@+id/scan_icon_reload"

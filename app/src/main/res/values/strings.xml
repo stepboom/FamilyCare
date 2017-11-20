@@ -7,6 +7,22 @@
     <string name="scan_activity_finish">Finished Discovery</string>
     <string name="scan_activity_no_result">No Result</string>
     <string name="scan_activity_mac_adr">MAC Adress:</string>
+    <string name="main_activity_cannot_open_bluetooth">Can\'t Open Bluetooth</string>
+    <string name="main_activity_menu_more_1">more_item_1</string>
+    <string name="main_activity_menu_more_2">more_item_2</string>
+    <string name="main_activity_menu_more_3">more_item_3</string>
+    <string name="main_activity_menu_more_4">more_item_4</string>
+    <string name="shared_preferences_user">UserDetail</string>
+    <string name="shared_preferences_member">MemberDetail</string>
+    <string name="shared_preferences_name">name</string>
+    <string name="shared_preferences_description">description</string>
+    <string name="shared_preferences_role">role</string>
+    <string name="empty_string"></string>
+    <string name="parents">parent</string>
+    <string name="children">children</string>
+    <string name="service_name">TestService</string>
+    <string name="service_name2">FullscreenService</string>
+
 
     <string-array name="roles">
         <item>Parent</item>

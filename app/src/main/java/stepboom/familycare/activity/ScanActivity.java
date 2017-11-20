@@ -8,29 +8,26 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Set;
 
 import stepboom.familycare.Contextor;
 import stepboom.familycare.R;
-import stepboom.familycare.View.SearchBluetoothItem;
+import stepboom.familycare.view.SearchBluetoothItem;
 import stepboom.familycare.adapter.ResultAdapter;
 
 public class ScanActivity extends AppCompatActivity {
@@ -39,6 +36,8 @@ public class ScanActivity extends AppCompatActivity {
     private BluetoothAdapter mBluetoothAdapter;
     private ResultAdapter mNewDevicesArrayAdapter;
     private ImageView backIcon;
+    private SharedPreferences sp;
+    private SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +59,9 @@ public class ScanActivity extends AppCompatActivity {
     }
 
     private void initInstances() {
+        sp = getSharedPreferences(getString(R.string.shared_preferences_member), Context.MODE_PRIVATE);
+        editor = sp.edit();
+
         reloadIcon = findViewById(R.id.scan_icon_reload);
         backIcon = findViewById(R.id.scan_icon_back);
         backIcon.setOnClickListener(new View.OnClickListener() {
@@ -142,7 +144,6 @@ public class ScanActivity extends AppCompatActivity {
             if(BluetoothDevice.ACTION_FOUND.equals(action)){
                 BluetoothDevice device =  intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 //if(device.getBondState() != BluetoothDevice.BOND_BONDED){
-                System.out.println(device.getAddress());
                 mNewDevicesArrayAdapter.add(device.getName(),device.getAddress());
                 mNewDevicesArrayAdapter.notifyDataSetChanged();
             } else if(BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
@@ -167,13 +168,14 @@ public class ScanActivity extends AppCompatActivity {
 
             final Dialog dialog = new Dialog(ScanActivity.this);
             dialog.setContentView(R.layout.add_new_member_dialog);
-            TextInputEditText mac = dialog.findViewById(R.id.add_new_member_mac);
+            final TextInputEditText mac = dialog.findViewById(R.id.add_new_member_mac);
             mac.setText(address);
             mac.setEnabled(false);
-            TextInputEditText name = dialog.findViewById(R.id.add_new_member_name);
+            final TextInputEditText name = dialog.findViewById(R.id.add_new_member_name);
             name.setText(btName);
             name.requestFocus();
-            Spinner spinner = dialog.findViewById(R.id.add_new_member_spinner);
+            final TextInputEditText description = dialog.findViewById(R.id.add_new_member_description);
+            final Spinner spinner = dialog.findViewById(R.id.add_new_member_spinner);
             String [] roles = getResources().getStringArray(R.array.roles);
             ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(getApplicationContext(),
                     android.R.layout.simple_dropdown_item_1line,roles);
@@ -182,6 +184,10 @@ public class ScanActivity extends AppCompatActivity {
             done.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    String detail = name.getText().toString() + "/" + description.getText().toString() + "/"
+                            + spinner.getSelectedItem() + "/0";
+                    editor.putString(mac.getText().toString(), detail);
+                    editor.apply();
                     dialog.cancel();
                     finish();
                 }

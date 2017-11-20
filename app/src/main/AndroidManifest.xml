@@ -4,7 +4,10 @@
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-feature android:name="android.hardware.bluetooth_le"  android:required="true" />
 
     <application
         android:name=".MainApplication"
@@ -17,11 +20,23 @@
         <activity android:name=".activity.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".activity.MainActivity" />
-        <activity android:name=".activity.ScanActivity"></activity>
+        <activity android:name=".activity.ScanActivity" />
+
+        <service
+            android:name=".service.TestService"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/service_name"></service>
+        <service
+            android:name=".service.FullscreenService"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/service_name"></service>
+
+        <activity android:name=".activity.SearchActivity"></activity>
     </application>
 
 </manifest>

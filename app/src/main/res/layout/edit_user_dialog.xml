@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/add_new_member_toolbar"
+        android:background="@color/red"
+        android:layout_width="match_parent"
+        android:layout_height="64dp">
+
+            <TextView
+                fontPath="fonts/Roboto-Medium.ttf"
+                android:id="@+id/main_text_topbar"
+                android:layout_toEndOf="@id/scan_icon_back"
+                android:layout_toRightOf="@id/scan_icon_back"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:text="Edit User"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+    </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_below="@id/add_new_member_toolbar"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.TextInputLayout
+            app:counterMaxLength="50"
+            app:counterEnabled="true"
+            android:id="@+id/add_new_member_input_layout_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Name"
+                android:id="@+id/add_new_member_name"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            app:counterMaxLength="50"
+            app:counterEnabled="true"
+            android:id="@+id/add_new_member_input_layout_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Description"
+                android:id="@+id/add_new_member_description"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <Spinner
+            android:id="@+id/add_new_member_spinner"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="25dp"
+            android:layout_gravity="end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/add_new_member_cancel"
+                android:textSize="14sp"
+                android:textColor="@color/red"
+                android:background="@color/transparent"
+                android:text="cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/add_new_member_done"
+                android:textSize="14sp"
+                android:textColor="@color/red"
+                android:background="@color/transparent"
+                android:text="done"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+</RelativeLayout>

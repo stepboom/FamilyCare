@@ -4,11 +4,14 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="red">#EF4438</color>
+    <color name="dark_red">#C62828</color>
     <color name="green">#00C853</color>
     <color name="black">#212121</color>
     <color name="black_overlay">#7E212121</color>
     <color name="grey">#A9A8A9</color>
+    <color name="light_grey">#E8E8E8</color>
     <color name="white">#F5F5F5</color>
     <color name="white_overlay">#7EF5F5F5</color>
+    <color name="menu_overlay">#ccfafafa</color>
     <color name="transparent">#00ffffff</color>
 </resources>

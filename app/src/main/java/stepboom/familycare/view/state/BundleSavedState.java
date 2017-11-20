@@ -1,4 +1,4 @@
-package stepboom.familycare.View.state;
+package stepboom.familycare.view.state;
 
 import android.os.Bundle;
 import android.os.Parcel;

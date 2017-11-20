@@ -1,19 +1,14 @@
-package stepboom.familycare.View;
+package stepboom.familycare.view;
 
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import stepboom.familycare.R;
-import stepboom.familycare.View.BaseCustomViewGroup;
-import stepboom.familycare.View.state.BundleSavedState;
+import stepboom.familycare.view.state.BundleSavedState;
 
 /**
  * Created by nuuneoi on 11/16/2014.

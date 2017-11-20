@@ -20,7 +20,7 @@
         android:textColor="@color/black_overlay"
         android:id="@+id/search_bluetooth_mac"
         android:textSize="14sp"
-        android:text="Mac Adress"
+        android:text="Mac Address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 </LinearLayout>

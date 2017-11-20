@@ -6,10 +6,8 @@ import android.widget.BaseAdapter;
 
 import java.util.ArrayList;
 
-import javax.xml.transform.Result;
-
 import stepboom.familycare.R;
-import stepboom.familycare.View.SearchBluetoothItem;
+import stepboom.familycare.view.SearchBluetoothItem;
 
 /**
  * Created by Stepboom on 11/11/2017.
