@@ -82,7 +82,7 @@
             android:layout_marginLeft="24dp"
             android:textColor="#F44235"
             android:textSize="14sp"
-            android:text="Disble Monitor"
+            android:text="Disable Monitor"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:gravity="center_vertical" />

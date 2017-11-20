@@ -80,11 +80,11 @@ public class CustomAdapter extends BaseAdapter {
 
         // ---------------------- human's name ----------------------
         TextView textView = (TextView)view.findViewById(R.id.humanName);
-        textView.setText(strName[position]);
-        if(status[position] == 3 || status[position] == 4)
+        textView.setText(strName[position]); // write this person's name on the textview
+        if(status[position] == 3 || status[position] == 4) // text color is red when this person is lost
             textView.setTextColor(ContextCompat.getColor(Contextor.getInstance().getContext(), R.color.red));
 
-        Contextor.getInstance().getContext();
+
 
 
 
@@ -92,14 +92,14 @@ public class CustomAdapter extends BaseAdapter {
 
 
         // ---------------------- status icon ----------------------
-        /// if(status[position] == 2 || status[position] == 2) {
-        // display status lost when children is lost , otherwise not display this imageview
+         if(status[position] == 3 || status[position] == 4) {
+            // display status lost when children is lost , otherwise not create this imageview
 
-        ImageView imageView = (ImageView)view.findViewById(R.id.statusIcon);
-        imageView.setBackgroundResource(R.drawable.ic_status);
+            ImageView imageView = (ImageView)view.findViewById(R.id.statusIcon);
+            imageView.setBackgroundResource(R.drawable.ic_status);
 
 
-        /// }
+         }
         // ---------------------- status icon ----------------------
 
 
