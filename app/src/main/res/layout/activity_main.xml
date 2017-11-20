@@ -72,8 +72,9 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:background="@color/white"
                     android:id="@+id/tvEnableMonitor"
-                    android:layout_marginLeft="24dp"
+                    android:paddingLeft="24dp"
                     android:textColor="#F44235"
                     android:textSize="14sp"
                     android:text="Enable Monitor"
@@ -86,12 +87,12 @@
                     android:divider="@null"
                     android:id="@+id/lvEnableMonitor"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="20dp" />
+                    android:layout_height="wrap_content" />
 
                 <TextView
+                    android:background="@color/white"
                     android:id="@+id/tvDisableMonitor"
-                    android:layout_marginLeft="24dp"
+                    android:paddingLeft="24dp"
                     android:textColor="#F44235"
                     android:textSize="14sp"
                     android:text="Disable Monitor"
@@ -103,8 +104,7 @@
                     android:divider="@null"
                     android:id="@+id/lvDisableMonitor"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="20dp" />
+                    android:layout_height="wrap_content" />
             </LinearLayout>
         </ScrollView>
 
