@@ -10,8 +10,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -19,6 +21,7 @@ import org.w3c.dom.Text;
 
 import stepboom.familycare.Contextor;
 import stepboom.familycare.R;
+import stepboom.familycare.adapter.CustomAdapter;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class MainActivity extends AppCompatActivity {
@@ -32,6 +35,11 @@ public class MainActivity extends AppCompatActivity {
     private Switch mSwitch;
     private TextView detailText;
 
+    private TextView enableMonitorTextView;
+    private TextView disableMonitorTextView;
+    private ListView enableMonitorListView;
+    private ListView disableMonitorListView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,14 +52,41 @@ public class MainActivity extends AppCompatActivity {
                     .addToBackStack(null)
                     .commit();
         }*/
+
+        // --------------------------- Begin Custom List View ------------------------------------
+
+        // ------ SharedPreference ------//
+        String[] name_list = { "Phongpeeradej","Peerakit","Sitthichai", "Supakrit"};
+        Integer[] role_list = {0,0,0,0}; // 0 = child , 1 = adult
+        Integer[] status_list = {3,1,1,1};
+        // ------ SharedPreference ------//
+
+        // CustomAdapter resides in adapter folder
+        CustomAdapter adapter = new CustomAdapter(getApplicationContext(),
+                name_list,
+                role_list,
+                status_list);
+
+        enableMonitorListView.setAdapter(adapter);
+        disableMonitorListView.setAdapter(adapter);
+
+        // --------------------------- End Custom List View ------------------------------------
+
     }
 
     private void initInstances() {
-        searchText = findViewById(R.id.main_search_text);
+
+        searchText = findViewById(R.id.main_text_topbar);
         menuIcon = findViewById(R.id.main_icon_hamburger);
         searchIcon = findViewById(R.id.main_icon_search);
         moreIcon = findViewById(R.id.main_icon_more);
         menu = findViewById(R.id.main_layout_drawer);
+
+        enableMonitorTextView = findViewById(R.id.tvEnableMonitor);
+        disableMonitorTextView = findViewById(R.id.tvDisableMonitor);
+        enableMonitorListView = findViewById(R.id.lvEnableMonitor);
+        disableMonitorListView = findViewById(R.id.lvDisableMonitor);
+
 
         navigationView = findViewById(R.id.main_navigation);
         View header = navigationView.getHeaderView(0);
