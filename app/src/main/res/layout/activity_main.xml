@@ -9,9 +9,9 @@
     tools:context="stepboom.familycare.activity.MainActivity">
 
     <LinearLayout
+        android:orientation="vertical"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
         <android.support.v7.widget.Toolbar
             android:background="@color/red"
             android:layout_width="wrap_content"
@@ -62,38 +62,51 @@
 
         </android.support.v7.widget.Toolbar>
 
-        <TextView
-            android:id="@+id/tvEnableMonitor"
-            android:layout_marginLeft="24dp"
-            android:textColor="#F44235"
-            android:textSize="14sp"
-            android:text="Enable Monitor"
+        <ScrollView
+            android:fillViewport="true"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:gravity="center_vertical" />
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvEnableMonitor"
+                    android:layout_marginLeft="24dp"
+                    android:textColor="#F44235"
+                    android:textSize="14sp"
+                    android:text="Enable Monitor"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:gravity="center_vertical" />
 
 
-        <ListView
-            android:id="@+id/lvEnableMonitor"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp" />
+                <stepboom.familycare.view.ExpandableHeightListView
+                    android:divider="@null"
+                    android:id="@+id/lvEnableMonitor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp" />
 
-        <TextView
-            android:id="@+id/tvDisableMonitor"
-            android:layout_marginLeft="24dp"
-            android:textColor="#F44235"
-            android:textSize="14sp"
-            android:text="Disable Monitor"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:gravity="center_vertical" />
+                <TextView
+                    android:id="@+id/tvDisableMonitor"
+                    android:layout_marginLeft="24dp"
+                    android:textColor="#F44235"
+                    android:textSize="14sp"
+                    android:text="Disable Monitor"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:gravity="center_vertical" />
 
-        <ListView
-            android:id="@+id/lvDisableMonitor"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp" />
+                <stepboom.familycare.view.ExpandableHeightListView
+                    android:divider="@null"
+                    android:id="@+id/lvDisableMonitor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp" />
+            </LinearLayout>
+        </ScrollView>
 
     </LinearLayout>
 

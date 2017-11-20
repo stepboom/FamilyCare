@@ -1,6 +1,7 @@
 package stepboom.familycare.adapter;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -110,6 +112,24 @@ public class CustomAdapter extends BaseAdapter {
                     Intent i = new Intent(mContext, TestService.class);
                     mContext.stopService(i);
                     ((Activity) mContext).startActivityForResult(search,103);
+                } else {
+                    final Dialog dialog = new Dialog(mContext);
+                    dialog.setContentView(R.layout.confirm_dialog);
+                    Button done = dialog.findViewById(R.id.disable_member_done);
+                    done.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            dialog.cancel();
+                        }
+                    });
+                    Button cancel = dialog.findViewById(R.id.disable_member_cancel);
+                    cancel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            dialog.cancel();
+                        }
+                    });
+                    dialog.show();
                 }
             }
         });
