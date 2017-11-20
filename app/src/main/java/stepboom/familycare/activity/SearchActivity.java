@@ -46,8 +46,8 @@ public class SearchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        UserParcelable userParcelable = getIntent().getParcelableExtra("user");
-        user = new User(userParcelable.getMacAddress(),userParcelable.getInformation());
+        /*UserParcelable userParcelable = getIntent().getParcelableExtra("user");
+        user = new User(userParcelable.getMacAddress(),userParcelable.getInformation());*/
         initInstances();
         doDiscovery();
     }
@@ -65,6 +65,9 @@ public class SearchActivity extends AppCompatActivity {
         sp = getSharedPreferences(getString(R.string.shared_preferences_member), Context.MODE_PRIVATE);
         editor = sp.edit();
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
+        String macAddress = getIntent().getStringExtra("macAddress");
+        user = new User(macAddress,sp.getString(macAddress,""));
 
         finished = false;
 

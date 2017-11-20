@@ -8,9 +8,11 @@
     android:layout_height="match_parent"
     tools:context="stepboom.familycare.activity.MainActivity">
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:weightSum="2"
+        android:orientation="vertical">
         <android.support.v7.widget.Toolbar
             android:background="@color/red"
             android:layout_width="wrap_content"
@@ -29,7 +31,6 @@
                     android:layout_height="match_parent" />
                 <TextView
                     android:layout_centerVertical="true"
-                    fontPath="fonts/Roboto-Medium.ttf"
                     android:id="@+id/main_text_topbar"
                     android:layout_toRightOf="@id/main_icon_hamburger"
                     android:textColor="@color/white"
@@ -63,73 +64,92 @@
         </android.support.v7.widget.Toolbar>
 
         <TextView
-        android:layout_gravity="center"
-        android:id="@+id/main_search_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
+            android:id="@+id/tvEnableMonitor"
+            android:layout_marginLeft="24dp"
+            android:textColor="#F44235"
+            android:textSize="14sp"
+            android:text="Enable Monitor"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center_vertical" />
+
+
+        <ListView
+            android:id="@+id/lvEnableMonitor"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp" />
 
         <TextView
-            android:layout_marginTop="20dp"
-            android:layout_gravity="center"
-            android:id="@+id/main_search_text2"
+            android:id="@+id/tvDisableMonitor"
+            android:layout_marginLeft="24dp"
+            android:textColor="#F44235"
+            android:textSize="14sp"
+            android:text="Disble Monitor"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center_vertical" />
+
+        <ListView
+            android:id="@+id/lvDisableMonitor"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/main_fab_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!--android.support.design.widget.FloatingActionButton
+            android:layout_marginRight="@dimen/fab_margin_right"
+            android:layout_marginBottom="@dimen/fab_margin_bottom"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_width="61dp"
+            android:layout_height="61dp"/-->
+
+        <com.getbase.floatingactionbutton.FloatingActionsMenu
+            android:id="@+id/main_fab_menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Stop Hello World!" />
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="@dimen/fab_margin_bottom"
+            android:layout_marginRight="@dimen/fab_margin_right"
+            app:fab_addButtonColorNormal="@color/red"
+            app:fab_addButtonColorPressed="@color/red"
+            app:fab_addButtonPlusIconColor="@color/white"
+            app:fab_labelStyle="@style/menu_labels_style"
+            app:fab_labelsPosition="left">
 
-
-        <RelativeLayout
-            android:id="@+id/main_fab_overlay"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <!--android.support.design.widget.FloatingActionButton
-                android:layout_marginRight="@dimen/fab_margin_right"
-                android:layout_marginBottom="@dimen/fab_margin_bottom"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"
-                android:layout_width="61dp"
-                android:layout_height="61dp"/-->
-
-            <com.getbase.floatingactionbutton.FloatingActionsMenu
-                android:id="@+id/main_fab_menu"
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/main_fab_add_mac"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginBottom="@dimen/fab_margin_bottom"
-                android:layout_marginRight="@dimen/fab_margin_right"
-                app:fab_addButtonColorNormal="@color/red"
-                app:fab_addButtonColorPressed="@color/red"
-                app:fab_addButtonPlusIconColor="@color/white"
-                app:fab_labelStyle="@style/menu_labels_style"
-                app:fab_labelsPosition="left">
+                app:fab_colorNormal="@color/red"
+                app:fab_colorPressed="@color/red"
+                app:fab_icon="@drawable/ic_add_mac"
+                app:fab_size="mini"
+                app:fab_title="Add by MAC Address" />
 
-                <com.getbase.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/main_fab_add_mac"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:fab_colorNormal="@color/red"
-                    app:fab_colorPressed="@color/red"
-                    app:fab_icon="@drawable/ic_add_mac"
-                    app:fab_size="mini"
-                    app:fab_title="Add by MAC Address" />
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/main_fab_add_scan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fab_colorNormal="@color/red"
+                app:fab_colorPressed="@color/red"
+                app:fab_icon="@drawable/ic_add_bluetooth"
+                app:fab_size="mini"
+                app:fab_title="Add by Bluetooth Searching" />
 
-                <com.getbase.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/main_fab_add_scan"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:fab_colorNormal="@color/red"
-                    app:fab_colorPressed="@color/red"
-                    app:fab_icon="@drawable/ic_add_bluetooth"
-                    app:fab_size="mini"
-                    app:fab_title="Add by Bluetooth Searching" />
-
-            </com.getbase.floatingactionbutton.FloatingActionsMenu>
-        </RelativeLayout>
-
-    </FrameLayout>
+        </com.getbase.floatingactionbutton.FloatingActionsMenu>
+    </RelativeLayout>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/main_navigation"

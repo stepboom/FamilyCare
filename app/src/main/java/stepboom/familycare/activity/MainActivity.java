@@ -32,6 +32,10 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.AdapterView;
+import android.widget.CompoundButton;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,6 +45,7 @@ import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -51,6 +56,7 @@ import stepboom.familycare.service.FullscreenService;
 import stepboom.familycare.service.TestService;
 import stepboom.familycare.util.User;
 import stepboom.familycare.util.UserParcelable;
+import stepboom.familycare.adapter.CustomAdapter;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class MainActivity extends AppCompatActivity {
@@ -81,6 +87,11 @@ public class MainActivity extends AppCompatActivity {
     private boolean start = false;
     private int i = 0;
 
+    private TextView enableMonitorTextView;
+    private TextView disableMonitorTextView;
+    private ListView enableMonitorListView;
+    private ListView disableMonitorListView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,11 +115,32 @@ public class MainActivity extends AppCompatActivity {
                     .addToBackStack(null)
                     .commit();
         }*/
+
+        // --------------------------- Begin Custom List View ------------------------------------
+
+        // ------ SharedPreference ------//
+        String[] name_list = { "Phongpeeradej","Peerakit","Sitthichai", "Supakrit"};
+        Integer[] role_list = {0,0,0,0}; // 0 = child , 1 = adult
+        Integer[] status_list = {3,1,1,1};
+        // ------ SharedPreference ------//
+
+        // CustomAdapter resides in adapter folder
+        /*CustomAdapter adapter = new CustomAdapter(getApplicationContext(),
+                name_list,
+                role_list,
+                status_list);*/
+
+        /*enableMonitorListView.setAdapter(adapter);
+        disableMonitorListView.setAdapter(adapter);*/
+
+        // --------------------------- End Custom List View ------------------------------------
+
     }
 
     private void initInstances() {
-        searchText = findViewById(R.id.main_search_text);
-        searchText2 = findViewById(R.id.main_search_text2);
+//        searchText = findViewById(R.id.main_search_text);
+//        searchText2 = findViewById(R.id.main_search_text2);
+        searchText = findViewById(R.id.main_text_topbar);
         menuIcon = findViewById(R.id.main_icon_hamburger);
         searchIcon = findViewById(R.id.main_icon_search);
         moreIcon = findViewById(R.id.main_icon_more);
@@ -199,6 +231,12 @@ public class MainActivity extends AppCompatActivity {
                 scanBluetooth();
             }
         });
+
+        enableMonitorTextView = findViewById(R.id.tvEnableMonitor);
+        disableMonitorTextView = findViewById(R.id.tvDisableMonitor);
+        enableMonitorListView = findViewById(R.id.lvEnableMonitor);
+        disableMonitorListView = findViewById(R.id.lvDisableMonitor);
+
 
         navigationView = findViewById(R.id.main_navigation);
 
@@ -307,54 +345,54 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        searchText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent search = new Intent(getApplicationContext(), SearchActivity.class);
-                search.putExtra("user", new UserParcelable("E8:2A:EA:DC:E7:C6","MSI/My Computer/Children/4"));
-                Intent i = new Intent(getApplicationContext(), TestService.class);
-                stopService(i);
-                startActivityForResult(search,103);
-                /*if(!start) {*/
-                    /*Intent i = new Intent(getApplicationContext(), TestService.class);
-                    i.putExtra("KEY1", "Value to be used by the service");
-                    startService(i);*/
-                /*}else{
-                    Intent i = new Intent(getApplicationContext(), TestService.class);
-                    stopService(i);
-                }*/
-            }
-        });
-
-        searchText2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), FullscreenService.class);
-                startService(i);
-                /*Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-                intent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 0);
-                startActivityForResult(intent, 102);*/
-                /*Intent intent = new Intent(MainActivity.this, MainActivity.class);
-                PendingIntent pIntent = PendingIntent.getActivity(MainActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-                Notification n  = new Notification.Builder(MainActivity.this)
-                        .setContentTitle("FamilyCare Notification")
-                        .setContentText("Hello From FamilyCare")
-                        .setSmallIcon(R.drawable.ic_shield)
-                        .setContentIntent(pIntent)
-                        .setAutoCancel(true)
-                        .setFullScreenIntent(pIntent, true).getNotification();*/
-                        /*.addAction(R.drawable.icon, "Call", pIntent)
-                        .addAction(R.drawable.icon, "More", pIntent)
-                        .addAction(R.drawable.icon, "And more", pIntent).build();*/
-
-
-                /*NotificationManager notificationManager =
-                        (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-                notificationManager.notify(0, n);*/
-
-            }
-        });
+//        searchText.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent search = new Intent(getApplicationContext(), SearchActivity.class);
+//                search.putExtra("user", new UserParcelable("E8:2A:EA:DC:E7:C6","MSI/My Computer/Children/4"));
+//                Intent i = new Intent(getApplicationContext(), TestService.class);
+//                stopService(i);
+//                startActivityForResult(search,103);
+//                /*if(!start) {*/
+//                    /*Intent i = new Intent(getApplicationContext(), TestService.class);
+//                    i.putExtra("KEY1", "Value to be used by the service");
+//                    startService(i);*/
+//                /*}else{
+//                    Intent i = new Intent(getApplicationContext(), TestService.class);
+//                    stopService(i);
+//                }*/
+//            }
+//        });
+//
+//        searchText2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent i = new Intent(getApplicationContext(), FullscreenService.class);
+//                startService(i);
+//                /*Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+//                intent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 0);
+//                startActivityForResult(intent, 102);*/
+//                /*Intent intent = new Intent(MainActivity.this, MainActivity.class);
+//                PendingIntent pIntent = PendingIntent.getActivity(MainActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+//
+//                Notification n  = new Notification.Builder(MainActivity.this)
+//                        .setContentTitle("FamilyCare Notification")
+//                        .setContentText("Hello From FamilyCare")
+//                        .setSmallIcon(R.drawable.ic_shield)
+//                        .setContentIntent(pIntent)
+//                        .setAutoCancel(true)
+//                        .setFullScreenIntent(pIntent, true).getNotification();*/
+//                        /*.addAction(R.drawable.icon, "Call", pIntent)
+//                        .addAction(R.drawable.icon, "More", pIntent)
+//                        .addAction(R.drawable.icon, "And more", pIntent).build();*/
+//
+//
+//                /*NotificationManager notificationManager =
+//                        (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+//                notificationManager.notify(0, n);*/
+//
+//            }
+//        });
         menuIcon.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -468,6 +506,29 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    @Override
+    public void onResume(){
+
+        Map<String, ?> allEntries = sp2.getAll();
+        ArrayList<User> userEnableList = new ArrayList<>();
+        ArrayList<User> userDisableList = new ArrayList<>();
+        for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
+            User user = new User(entry.getKey(), entry.getValue().toString());
+            if(user.getStatus().equals("0")) {
+                userDisableList.add(user);
+            } else {
+                userEnableList.add(user);
+            }
+            System.out.println(entry.getKey() + " : " + entry.getValue().toString());
+        }
+
+        CustomAdapter enableAdapter = new CustomAdapter(MainActivity.this, userEnableList);
+        CustomAdapter disableAdapter = new CustomAdapter(MainActivity.this, userDisableList);
+        enableMonitorListView.setAdapter(enableAdapter);
+        disableMonitorListView.setAdapter(disableAdapter);
+        super.onResume();
     }
 
     private void bluetoothOn(){
