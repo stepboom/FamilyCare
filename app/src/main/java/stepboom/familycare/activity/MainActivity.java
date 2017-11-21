@@ -286,7 +286,10 @@ public class MainActivity extends AppCompatActivity {
 
         if(sp.contains(getString(R.string.shared_preferences_name)))
             nameText.setText(sp.getString(getString(R.string.shared_preferences_name),getString(R.string.empty_string)));
-        else nameText.setText("Netty");
+        else if(mBluetoothAdapter.getName()!=null)
+            nameText.setText(mBluetoothAdapter.getName());
+        else
+            nameText.setText("Anonymous");
         macText.setText(macAddress);
 
         nameText.setOnClickListener(new View.OnClickListener() {
@@ -521,6 +524,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onResume(){
+        System.out.println("On Resume");
         setListAdapter();
         super.onResume();
     }

@@ -112,24 +112,6 @@ public class CustomAdapter extends BaseAdapter {
                     Intent i = new Intent(mContext, TestService.class);
                     mContext.stopService(i);
                     ((Activity) mContext).startActivityForResult(search,103);
-                } else {
-                    final Dialog dialog = new Dialog(mContext);
-                    dialog.setContentView(R.layout.confirm_dialog);
-                    Button done = dialog.findViewById(R.id.disable_member_done);
-                    done.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            dialog.cancel();
-                        }
-                    });
-                    Button cancel = dialog.findViewById(R.id.disable_member_cancel);
-                    cancel.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            dialog.cancel();
-                        }
-                    });
-                    dialog.show();
                 }
             }
         });

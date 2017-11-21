@@ -23,17 +23,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import junit.framework.Test;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
 
 import stepboom.familycare.R;
+import stepboom.familycare.activity.MainActivity;
 import stepboom.familycare.util.User;
 
 /**
@@ -49,7 +52,7 @@ public class TestService extends Service {
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
     private int available = 0;
-    private View mView;
+    private Map<String,View> mViewMap;
 
     @Override
     public void onCreate() {
@@ -61,6 +64,7 @@ public class TestService extends Service {
         editor = sp.edit();
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
+        mViewMap = new HashMap<>();
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         this.registerReceiver(mReceiver, filter);
 
@@ -178,47 +182,67 @@ public class TestService extends Service {
     }
 
     private void alert(User user){
-        user.setStatus("4");
         final User preSaveUser = user;
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if(mView == null) {
-                    WindowManager mWindowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
-
-                    LayoutInflater mInflater = (LayoutInflater)
-                            getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-                    mView = mInflater.inflate(R.layout.alert_notification, null);
-
-                    mView.findViewById(R.id.alert_button_close).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            editor.putString(preSaveUser.getMacAddress(), preSaveUser.getInformation());
-                            editor.apply();
-                            removeNow();
-                        }
-                    });
-
-                    WindowManager.LayoutParams mLayoutParams = new WindowManager.LayoutParams(
-                            ViewGroup.LayoutParams.MATCH_PARENT,
-                            ViewGroup.LayoutParams.MATCH_PARENT, 0, 0,
-                            WindowManager.LayoutParams.TYPE_SYSTEM_ERROR,
-                            WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
-                                    | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
-                                    | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
-                                    | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
-                            PixelFormat.RGBA_8888);
-                    mWindowManager.addView(mView, mLayoutParams);
+                if(mViewMap.get(preSaveUser.getMacAddress())==null) {
+                    createModal(preSaveUser);
                 }
             }
         });
     }
 
-    public void removeNow() {
-        if (mView != null) {
+    public void createModal(final User preSaveUser){
+        WindowManager mWindowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
+
+        LayoutInflater mInflater = (LayoutInflater)
+                getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        View mView = mInflater.inflate(R.layout.alert_notification, null);
+
+        TextView name = mView.findViewById(R.id.alert_text_name);
+        name.setText(preSaveUser.getName());
+
+        mView.findViewById(R.id.alert_button_close).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putString(preSaveUser.getMacAddress(), preSaveUser.getInformation());
+                editor.apply();
+                removeNow(preSaveUser.getMacAddress());
+                Intent intent = new Intent(TestService.this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
+
+        mView.setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE);
+
+        WindowManager.LayoutParams mLayoutParams = new WindowManager.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT, 0, 0,
+                WindowManager.LayoutParams.TYPE_SYSTEM_ERROR,
+                WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
+                        | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
+                        | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
+                        | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
+                PixelFormat.RGBA_8888);
+
+        mWindowManager.addView(mView, mLayoutParams);
+        mViewMap.put(preSaveUser.getMacAddress(),mView);
+    }
+
+    public void removeNow(String macAddress) {
+        if (mViewMap.get(macAddress) != null) {
             WindowManager wm = (WindowManager) getSystemService(WINDOW_SERVICE);
-            wm.removeView(mView);
+            wm.removeView(mViewMap.get(macAddress));
+            mViewMap.remove(macAddress);
         }
     }
 
@@ -239,7 +263,7 @@ public class TestService extends Service {
                                 System.out.println("TEST FOUND : " + user.getMacAddress() + " " + user.getInformation());
                                 if (user.getStatus().equals("3")) {
                                     vibrate();
-                                    removeNow();
+                                    removeNow(user.getMacAddress());
                                     notification("Your Children is coming back !");
                                 } else if (user.getStatus().equals("1")) {
                                     //Toast.makeText(TestService.this, device.getName() + " : " + device.getAddress() + " Signal : " + rssi + " dB", Toast.LENGTH_SHORT).show();
@@ -262,7 +286,8 @@ public class TestService extends Service {
                         Map<String, ?> allEntries = sp.getAll();
                         for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
                             User user = new User(entry.getKey(), entry.getValue().toString());
-                            System.out.println("TEST FINISH : " + user.getMacAddress() + " " +user.getInformation());
+                            if(user.getName().equals("P'boom"))
+                                System.out.println("TEST FINISH : " + user.getMacAddress() + " " +user.getInformation());
                             if (user.getStatus().equals("2")) {
                                 user.setStatus("1");
                                 editor.putString(entry.getKey(),user.getInformation());
@@ -275,7 +300,6 @@ public class TestService extends Service {
                                 //Toast.makeText(TestService.this, "User Has Lost !!!", Toast.LENGTH_SHORT).show();
                                 vibrate();
                                 alert(user);
-                                //notification("Your Children is missing !");
                             }
                         }
                         doDiscovery();
