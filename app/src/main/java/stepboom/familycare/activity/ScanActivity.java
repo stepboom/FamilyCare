@@ -27,6 +27,7 @@ import java.util.Set;
 
 import stepboom.familycare.Contextor;
 import stepboom.familycare.R;
+import stepboom.familycare.view.ExpandableHeightListView;
 import stepboom.familycare.view.SearchBluetoothItem;
 import stepboom.familycare.adapter.ResultAdapter;
 
@@ -83,13 +84,17 @@ public class ScanActivity extends AppCompatActivity {
         ResultAdapter pairedDevicesArrayAdapter = new ResultAdapter();
         mNewDevicesArrayAdapter = new ResultAdapter();
 
-        ListView pairedDevicesListView = findViewById(R.id.scan_paired_list_view);
+        ExpandableHeightListView pairedDevicesListView = findViewById(R.id.scan_paired_list_view);
         pairedDevicesListView.setAdapter(pairedDevicesArrayAdapter);
         pairedDevicesListView.setOnItemClickListener(mDeviceClickListener);
+        pairedDevicesListView.setExpanded(true);
+        pairedDevicesListView.setFocusable(false);
 
-        ListView newDevicesListView = findViewById(R.id.scan_new_list_view);
+        ExpandableHeightListView newDevicesListView = findViewById(R.id.scan_new_list_view);
         newDevicesListView.setAdapter(mNewDevicesArrayAdapter);
         newDevicesListView.setOnItemClickListener(mDeviceClickListener);
+        newDevicesListView.setExpanded(true);
+        newDevicesListView.setFocusable(false);
 
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         this.registerReceiver(mReceiver, filter);

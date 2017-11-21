@@ -28,6 +28,7 @@ import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
@@ -57,6 +58,7 @@ import stepboom.familycare.service.TestService;
 import stepboom.familycare.util.User;
 import stepboom.familycare.util.UserParcelable;
 import stepboom.familycare.adapter.CustomAdapter;
+import stepboom.familycare.view.ExpandableHeightListView;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class MainActivity extends AppCompatActivity {
@@ -89,8 +91,8 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView enableMonitorTextView;
     private TextView disableMonitorTextView;
-    private ListView enableMonitorListView;
-    private ListView disableMonitorListView;
+    private ExpandableHeightListView enableMonitorListView;
+    private ExpandableHeightListView disableMonitorListView;
     private CustomAdapter enableAdapter;
     private CustomAdapter disableAdapter;
 
@@ -240,6 +242,10 @@ public class MainActivity extends AppCompatActivity {
         enableMonitorListView = findViewById(R.id.lvEnableMonitor);
         disableMonitorListView = findViewById(R.id.lvDisableMonitor);
 
+        enableMonitorListView.setExpanded(true);
+        disableMonitorListView.setExpanded(true);
+        enableMonitorListView.setFocusable(false);
+        disableMonitorListView.setFocusable(false);
 
         navigationView = findViewById(R.id.main_navigation);
 

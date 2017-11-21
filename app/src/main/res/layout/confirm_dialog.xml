@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_marginLeft="24dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_marginTop="24dp"
+            android:textColor="@color/black"
+            fontPath="fonts/Roboto-Medium.ttf"
+            android:textSize="20sp"
+            android:text="Are you sure?"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:textColor="@color/grey"
+            android:layout_marginTop="24dp"
+            android:layout_marginRight="24dp"
+            android:textSize="16sp"
+            android:text="If you ‘disable monitor’ this member, you won’t know when this member is lost."
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="14dp"
+            android:layout_gravity="end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/disable_member_cancel"
+                android:textSize="14sp"
+                android:textColor="@color/red"
+                android:background="@color/transparent"
+                android:text="cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/disable_member_done"
+                android:textSize="14sp"
+                android:textColor="@color/red"
+                android:background="@color/transparent"
+                android:text="done"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+</RelativeLayout>
