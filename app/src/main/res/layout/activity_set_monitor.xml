@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:background="@color/red"
+        android:layout_width="wrap_content"
+        android:layout_height="64dp">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_marginRight="17dp"
+                android:layout_centerVertical="true"
+                android:id="@+id/cross_set_monitor"
+                android:src="@drawable/ic_cross"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+            <TextView
+                android:layout_centerVertical="true"
+                android:id="@+id/main_text_topbar"
+                android:layout_toRightOf="@id/cross_set_monitor"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:text="Set Monitor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:paddingRight="14dp"
+                android:paddingLeft="14dp"
+                android:id="@+id/main_icon_more"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/ic_more"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+            <ImageView
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"
+                android:layout_centerVertical="true"
+                android:id="@+id/main_icon_search"
+                android:layout_toLeftOf="@id/main_icon_more"
+                android:src="@drawable/ic_search"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+        </RelativeLayout>
+
+
+    </android.support.v7.widget.Toolbar>
+
+    <ListView
+        android:divider="@null"
+        android:id="@+id/monitor_Listview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></ListView>
+</LinearLayout>

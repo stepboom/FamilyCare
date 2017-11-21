@@ -280,7 +280,7 @@ public class MainActivity extends AppCompatActivity {
 
         if(sp.contains(getString(R.string.shared_preferences_name)))
             nameText.setText(sp.getString(getString(R.string.shared_preferences_name),getString(R.string.empty_string)));
-        else nameText.setText(mBluetoothAdapter.getName());
+        else nameText.setText("Netty");
         macText.setText(macAddress);
 
         nameText.setOnClickListener(new View.OnClickListener() {
@@ -419,6 +419,9 @@ public class MainActivity extends AppCompatActivity {
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()){
                             case R.id.more_item_1 : {
+                                Intent intent = new Intent(getApplicationContext(),
+                                        SetMonitorActivity.class);
+                                startActivity(intent);
                                 break;
                             }
                             case R.id.more_item_2 : {
