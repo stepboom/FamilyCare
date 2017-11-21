@@ -337,20 +337,19 @@ public class MainActivity extends AppCompatActivity {
         mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b){
-                    if (!mBluetoothAdapter.isEnabled()) {
-                        Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                        startActivityForResult(enableBtIntent, 100);
-                    } else {
-                        bluetoothOn();
-                    }
+            if (b) {
+                if (!mBluetoothAdapter.isEnabled()) {
+                    Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                    startActivityForResult(enableBtIntent, 100);
                 } else {
-                    bluetoothOff();
-                    /*if (mBluetoothAdapter.isEnabled()){
-                        mBluetoothAdapter.disable();
-
-                    }*/
+                    bluetoothOn();
                 }
+            } else {
+                bluetoothOff();
+            /*if (mBluetoothAdapter.isEnabled()){
+                mBluetoothAdapter.disable();
+            }*/
+            }
             }
         });
 
