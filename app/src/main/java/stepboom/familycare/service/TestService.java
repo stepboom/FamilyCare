@@ -45,13 +45,11 @@ import stepboom.familycare.util.User;
 
 public class TestService extends Service {
 
-    private int i = 0;
     private Handler handler;
     private BluetoothAdapter mBluetoothAdapter;
     private Vibrator vibrator;
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
-    private int available = 0;
     private Map<String,View> mViewMap;
 
     @Override
@@ -141,6 +139,14 @@ public class TestService extends Service {
             }
         });
         mBluetoothAdapter.startDiscovery();
+        Timer t = new Timer();
+        t.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                System.out.println("Final 7 Second");
+                mBluetoothAdapter.cancelDiscovery();
+            }
+        },7000);
     }
 
     @Override
@@ -182,6 +188,7 @@ public class TestService extends Service {
     }
 
     private void alert(User user){
+        user.setStatus("4");
         final User preSaveUser = user;
         runOnUiThread(new Runnable() {
             @Override
@@ -261,17 +268,19 @@ public class TestService extends Service {
                             if (device.getAddress().equals(entry.getKey())) {
                                 User user = new User(entry.getKey(), entry.getValue().toString());
                                 System.out.println("TEST FOUND : " + user.getMacAddress() + " " + user.getInformation());
-                                if (user.getStatus().equals("3")) {
-                                    vibrate();
-                                    removeNow(user.getMacAddress());
-                                    notification("Your Children is coming back !");
-                                } else if (user.getStatus().equals("1")) {
-                                    //Toast.makeText(TestService.this, device.getName() + " : " + device.getAddress() + " Signal : " + rssi + " dB", Toast.LENGTH_SHORT).show();
-                                }
-                                if (!user.getStatus().equals("4")){
-                                    user.setStatus("2");
-                                    editor.putString(entry.getKey(),user.getInformation());
-                                    editor.apply();
+                                if(!user.getStatus().equals("0")) {
+                                    if (user.getStatus().equals("3")) {
+                                        vibrate();
+                                        removeNow(user.getMacAddress());
+                                        notification("Your Children is coming back !");
+                                    } else if (user.getStatus().equals("1")) {
+                                        //Toast.makeText(TestService.this, device.getName() + " : " + device.getAddress() + " Signal : " + rssi + " dB", Toast.LENGTH_SHORT).show();
+                                    }
+                                    if (!user.getStatus().equals("4")) {
+                                        user.setStatus("2");
+                                        editor.putString(entry.getKey(), user.getInformation());
+                                        editor.apply();
+                                    }
                                 }
 
                             }
@@ -286,8 +295,7 @@ public class TestService extends Service {
                         Map<String, ?> allEntries = sp.getAll();
                         for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
                             User user = new User(entry.getKey(), entry.getValue().toString());
-                            if(user.getName().equals("P'boom"))
-                                System.out.println("TEST FINISH : " + user.getMacAddress() + " " +user.getInformation());
+                            System.out.println("TEST FINISH : " + user.getMacAddress() + " " +user.getInformation());
                             if (user.getStatus().equals("2")) {
                                 user.setStatus("1");
                                 editor.putString(entry.getKey(),user.getInformation());

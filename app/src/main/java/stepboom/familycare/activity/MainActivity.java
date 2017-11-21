@@ -164,10 +164,10 @@ public class MainActivity extends AppCompatActivity {
         /*editor2.putString("E8:2A:EA:DC:E7:C6","MSI/My Computer/Children/1");
         editor2.apply();*/
 
-        /*Map<String, ?> allEntries = sp2.getAll();
+        Map<String, ?> allEntries = sp2.getAll();
         for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
             System.out.println(entry.getKey() + " : " + entry.getValue().toString());
-        }*/
+        }
 
         fabMenu.setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
             @Override

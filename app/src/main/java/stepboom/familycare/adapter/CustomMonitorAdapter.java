@@ -38,6 +38,7 @@ public class CustomMonitorAdapter extends BaseAdapter {
 
         sp = mContext.getSharedPreferences(mContext.getString(R.string.shared_preferences_member), Context.MODE_PRIVATE);
         editor = sp.edit();
+
     }
 
     @Override
@@ -62,79 +63,77 @@ public class CustomMonitorAdapter extends BaseAdapter {
         LayoutInflater mInflater =
                 (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        if(view == null) {
-            view = mInflater.inflate(R.layout.list_view_set_monitor, parent, false);
+        view = mInflater.inflate(R.layout.list_view_set_monitor, parent, false);
 
-            Switch mSwitch = view.findViewById(R.id.monitorSwitch);
-            ImageView humanIcon = view.findViewById(R.id.humanIcon_monitor);
-            TextView textView = view.findViewById(R.id.humanName_monitor);
-            textView.setText(users.get(position).getName());
+        Switch mSwitch = view.findViewById(R.id.monitorSwitch);
+        ImageView humanIcon = view.findViewById(R.id.humanIcon_monitor);
+        TextView textView = view.findViewById(R.id.humanName_monitor);
+        textView.setText(users.get(position).getName());
 
-            mSwitch.setChecked(!users.get(position).getStatus().equals("0"));
+        mSwitch.setChecked(!users.get(position).getStatus().equals("0"));
 
-            if(users.get(position).getStatus().equals("0")){
-                if (users.get(position).getRole().equals("Children")) {
-                    humanIcon.setBackgroundResource(R.drawable.ic_child_disable);
-                } else if (users.get(position).getRole().equals("Parent")) {
-                    humanIcon.setBackgroundResource(R.drawable.ic_adult_disable);
-                }
-                textView.setTextColor(ContextCompat.getColor(mContext,R.color.grey));
-            } else {
-                if (users.get(position).getRole().equals("Children")) {
-                    if (users.get(position).getStatus().equals("1")
-                            || users.get(position).getStatus().equals("2")) {
-                        humanIcon.setBackgroundResource(R.drawable.ic_child_normal);
-                    } else {
-                        humanIcon.setBackgroundResource(R.drawable.ic_child_lost);
-                    }
-                } else if (users.get(position).getRole().equals("Parent")) {
-                    if (users.get(position).getStatus().equals("1")
-                            || users.get(position).getStatus().equals("2")) {
-                        humanIcon.setBackgroundResource(R.drawable.ic_adult_normal);
-                    } else {
-                        humanIcon.setBackgroundResource(R.drawable.ic_adult_lost);
-                    }
-                }
-
-                if (users.get(position).getStatus().equals("3") || users.get(position).getStatus().equals("4")) {
-                    textView.setTextColor(ContextCompat.getColor(Contextor.getInstance().getContext(), R.color.red));
+        if(users.get(position).getStatus().equals("0")){
+            if (users.get(position).getRole().equals("Children")) {
+                humanIcon.setBackgroundResource(R.drawable.ic_child_disable);
+            } else if (users.get(position).getRole().equals("Parent")) {
+                humanIcon.setBackgroundResource(R.drawable.ic_adult_disable);
+            }
+            textView.setTextColor(ContextCompat.getColor(mContext,R.color.grey));
+        } else {
+            if (users.get(position).getRole().equals("Children")) {
+                if (users.get(position).getStatus().equals("1")
+                        || users.get(position).getStatus().equals("2")) {
+                    humanIcon.setBackgroundResource(R.drawable.ic_child_normal);
                 } else {
-                    textView.setTextColor(ContextCompat.getColor(Contextor.getInstance().getContext(), R.color.black));
+                    humanIcon.setBackgroundResource(R.drawable.ic_child_lost);
+                }
+            } else if (users.get(position).getRole().equals("Parent")) {
+                if (users.get(position).getStatus().equals("1")
+                        || users.get(position).getStatus().equals("2")) {
+                    humanIcon.setBackgroundResource(R.drawable.ic_adult_normal);
+                } else {
+                    humanIcon.setBackgroundResource(R.drawable.ic_adult_lost);
                 }
             }
-            mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(final CompoundButton compoundButton, boolean b) {
-                    if(b){
-                        users.get(pos).setStatus("1");
-                        editor.putString(users.get(position).getMacAddress(),users.get(position).getInformation());
-                        editor.apply();
-                    } else{
-                        final Dialog dialog = new Dialog(mContext);
-                        dialog.setContentView(R.layout.confirm_dialog);
-                        Button done = dialog.findViewById(R.id.disable_member_done);
-                        done.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                users.get(pos).setStatus("0");
-                                editor.putString(users.get(position).getMacAddress(),users.get(position).getInformation());
-                                editor.apply();
-                                dialog.cancel();
-                            }
-                        });
-                        Button cancel = dialog.findViewById(R.id.disable_member_cancel);
-                        cancel.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                compoundButton.setChecked(true);
-                                dialog.cancel();
-                            }
-                        });
-                        dialog.show();
-                    }
-                }
-            });
+
+            if (users.get(position).getStatus().equals("3") || users.get(position).getStatus().equals("4")) {
+                textView.setTextColor(ContextCompat.getColor(Contextor.getInstance().getContext(), R.color.red));
+            } else {
+                textView.setTextColor(ContextCompat.getColor(Contextor.getInstance().getContext(), R.color.black));
+            }
         }
+        mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(final CompoundButton compoundButton, boolean b) {
+                if(b){
+                    users.get(pos).setStatus("1");
+                    editor.putString(users.get(position).getMacAddress(),users.get(position).getInformation());
+                    editor.apply();
+                } else{
+                    final Dialog dialog = new Dialog(mContext);
+                    dialog.setContentView(R.layout.confirm_dialog);
+                    Button done = dialog.findViewById(R.id.disable_member_done);
+                    done.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            users.get(pos).setStatus("0");
+                            editor.putString(users.get(position).getMacAddress(),users.get(position).getInformation());
+                            editor.apply();
+                            dialog.cancel();
+                        }
+                    });
+                    Button cancel = dialog.findViewById(R.id.disable_member_cancel);
+                    cancel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            compoundButton.setChecked(true);
+                            dialog.cancel();
+                        }
+                    });
+                    dialog.show();
+                }
+            }
+        });
 
         return view;
     }

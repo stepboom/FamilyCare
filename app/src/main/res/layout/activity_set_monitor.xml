@@ -7,7 +7,7 @@
 
     <android.support.v7.widget.Toolbar
         android:background="@color/red"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="64dp">
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -29,25 +29,6 @@
                 android:text="Set Monitor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-            <ImageView
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:paddingRight="14dp"
-                android:paddingLeft="14dp"
-                android:id="@+id/main_icon_more"
-                android:layout_alignParentRight="true"
-                android:src="@drawable/ic_more"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
-            <ImageView
-                android:paddingRight="10dp"
-                android:paddingLeft="10dp"
-                android:layout_centerVertical="true"
-                android:id="@+id/main_icon_search"
-                android:layout_toLeftOf="@id/main_icon_more"
-                android:src="@drawable/ic_search"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
         </RelativeLayout>
 
 

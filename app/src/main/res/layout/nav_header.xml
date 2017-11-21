@@ -7,7 +7,6 @@
     <LinearLayout
         android:paddingStart="24dp"
         android:paddingLeft="24dp"
-        android:paddingBottom="16dp"
         android:background="@color/red"
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -29,7 +28,7 @@
                 android:layout_height="wrap_content">
                 <TextView
                     fontPath="fonts/Roboto-Medium.ttf"
-                    android:textSize="14dp"
+                    android:textSize="14sp"
                     android:textColor="@color/white_overlay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -43,7 +42,7 @@
                     android:layout_centerHorizontal="true"
                     android:text="AB-CD-EF-GH-IJ-KL"
                     android:textColor="@color/white_overlay"
-                    android:textSize="14dp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
 
