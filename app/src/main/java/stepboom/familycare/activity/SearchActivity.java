@@ -19,6 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import stepboom.familycare.R;
 import stepboom.familycare.service.TestService;
@@ -41,6 +43,7 @@ public class SearchActivity extends AppCompatActivity {
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
     private boolean finished;
+    private Timer t;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,10 +93,17 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void doDiscovery(){
-        if(mBluetoothAdapter.isDiscovering()){
-            mBluetoothAdapter.cancelDiscovery();
-        }
-        mBluetoothAdapter.startDiscovery();
+        t = new Timer();
+        t.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                System.out.println("Final 7 Second");
+                if(mBluetoothAdapter.isDiscovering()){
+                    mBluetoothAdapter.cancelDiscovery();
+                }
+                mBluetoothAdapter.startDiscovery();
+            }
+        },0,7000);
     }
 
     @Override
@@ -171,7 +181,6 @@ public class SearchActivity extends AppCompatActivity {
                         vibrate();
                         notFound();
                     }
-                    doDiscovery();
                 }
             }
         }
@@ -186,6 +195,15 @@ public class SearchActivity extends AppCompatActivity {
         }
         super.onBackPressed();
     }*/
+
+    @Override
+    public void onStop(){
+        if(t!=null){
+            t.cancel();
+            t.purge();
+        }
+        super.onStop();
+    }
 
     @Override
     protected void attachBaseContext(Context newBase) {

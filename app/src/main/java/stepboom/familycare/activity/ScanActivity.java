@@ -24,6 +24,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import stepboom.familycare.Contextor;
 import stepboom.familycare.R;

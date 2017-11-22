@@ -31,6 +31,7 @@ import junit.framework.Test;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
@@ -45,12 +46,18 @@ import stepboom.familycare.util.User;
 
 public class TestService extends Service {
 
+    private int MAX_COUNT = 3;
+    private int MIN_COUNT = 0;
+    private int DELAY = 4000;
+    private Timer t1;
+    private Timer t2;
     private Handler handler;
     private BluetoothAdapter mBluetoothAdapter;
     private Vibrator vibrator;
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
     private Map<String,View> mViewMap;
+    private Map<String,Integer> counter;
 
     @Override
     public void onCreate() {
@@ -63,6 +70,7 @@ public class TestService extends Service {
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
         mViewMap = new HashMap<>();
+        counter = new HashMap<>();
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         this.registerReceiver(mReceiver, filter);
 
@@ -78,7 +86,7 @@ public class TestService extends Service {
                 editor.apply();
             }
 
-            System.out.println(user.getMacAddress() + " : " + user.getInformation());
+            //System.out.println(user.getMacAddress() + " : " + user.getInformation());
         }
         super.onCreate();
     }
@@ -129,33 +137,42 @@ public class TestService extends Service {
     }
 
     private void doDiscovery(){
-        if(mBluetoothAdapter.isDiscovering()){
-            mBluetoothAdapter.cancelDiscovery();
-        }
-        runOnUiThread(new Runnable() {
+        t1 = new Timer();
+        t1.schedule(new TimerTask() {
             @Override
             public void run() {
-                //Toast.makeText(TestService.this, "Start Discovery", Toast.LENGTH_SHORT).show();
+                System.out.println("Final " + DELAY/1000 + " Second");
+                t2 = new Timer();
+                t2.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        if(mBluetoothAdapter.isDiscovering()) {
+                            mBluetoothAdapter.cancelDiscovery();
+                        }
+                        mBluetoothAdapter.startDiscovery();
+                    }
+                },500);
             }
-        });
-        mBluetoothAdapter.startDiscovery();
-        Timer t = new Timer();
-        t.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                System.out.println("Final 7 Second");
-                mBluetoothAdapter.cancelDiscovery();
-            }
-        },7000);
+        },0,DELAY);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
 
+        System.out.println("SERVICE HAS BEEN DESTROYED");
         // Make sure we're not doing discovery anymore
         if (mBluetoothAdapter != null) {
             mBluetoothAdapter.cancelDiscovery();
+        }
+
+        if(t1!=null) {
+            t1.cancel();
+            t1.purge();
+        }
+        if(t2!=null) {
+            t2.cancel();
+            t2.purge();
         }
 
         // Unregister broadcast listeners
@@ -267,19 +284,37 @@ public class TestService extends Service {
                         for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
                             if (device.getAddress().equals(entry.getKey())) {
                                 User user = new User(entry.getKey(), entry.getValue().toString());
-                                System.out.println("TEST FOUND : " + user.getMacAddress() + " " + user.getInformation());
+                                if(!user.getStatus().equals("0"))
+                                    //System.out.println("TEST FOUND : " + user.getMacAddress() + " " + user.getInformation() + " " + rssi);
                                 if(!user.getStatus().equals("0")) {
                                     if (user.getStatus().equals("3")) {
-                                        vibrate();
-                                        removeNow(user.getMacAddress());
-                                        notification("Your Children is coming back !");
+                                        if(counter.get(user.getMacAddress())==null){
+                                            counter.put(user.getMacAddress(),MIN_COUNT);
+                                        } else if(counter.get(user.getMacAddress())==MAX_COUNT) {
+                                            vibrate();
+                                            removeNow(user.getMacAddress());
+                                            notification(user.getName() + " is coming back !");
+                                            counter.put(user.getMacAddress(), MIN_COUNT);
+                                        }
                                     } else if (user.getStatus().equals("1")) {
                                         //Toast.makeText(TestService.this, device.getName() + " : " + device.getAddress() + " Signal : " + rssi + " dB", Toast.LENGTH_SHORT).show();
                                     }
                                     if (!user.getStatus().equals("4")) {
+                                        if(!counter.containsKey(user.getMacAddress())){
+                                            counter.put(user.getMacAddress(),MIN_COUNT);
+                                        } else {
+                                            int value = counter.get(user.getMacAddress()) - 1;
+                                            if(value < MIN_COUNT)
+                                                counter.put(user.getMacAddress(), MIN_COUNT );
+
+                                            else
+                                                counter.put(user.getMacAddress(), value );
+                                        }
                                         user.setStatus("2");
                                         editor.putString(entry.getKey(), user.getInformation());
                                         editor.apply();
+                                        //System.out.println(user.getMacAddress() + " : " + counter.get(user.getMacAddress()));
+
                                     }
                                 }
 
@@ -295,7 +330,8 @@ public class TestService extends Service {
                         Map<String, ?> allEntries = sp.getAll();
                         for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
                             User user = new User(entry.getKey(), entry.getValue().toString());
-                            System.out.println("TEST FINISH : " + user.getMacAddress() + " " +user.getInformation());
+                            if(!user.getStatus().equals("0"))
+                                //System.out.println("TEST FINISH : " + user.getMacAddress() + " " +user.getInformation());
                             if (user.getStatus().equals("2")) {
                                 user.setStatus("1");
                                 editor.putString(entry.getKey(),user.getInformation());
@@ -306,11 +342,30 @@ public class TestService extends Service {
                                 editor.putString(entry.getKey(),user.getInformation());
                                 editor.apply();
                                 //Toast.makeText(TestService.this, "User Has Lost !!!", Toast.LENGTH_SHORT).show();
-                                vibrate();
-                                alert(user);
+                                if(!counter.containsKey(user.getMacAddress())){
+                                    counter.put(user.getMacAddress(),MIN_COUNT + 1);
+                                } else {
+                                    int value = counter.get(user.getMacAddress()) + 1;
+                                    if(value < MAX_COUNT)
+                                        counter.put(user.getMacAddress(), value );
+                                    else {
+                                        counter.put(user.getMacAddress(), MAX_COUNT);
+                                        vibrate();
+                                        alert(user);
+                                    }
+                                }
+                                System.out.println(user.getMacAddress() + " : " + counter.get(user.getMacAddress()));
+                                /*vibrate();
+                                alert(user);*/
                             }
                         }
-                        doDiscovery();
+                        /*t2 = new Timer();
+                        t2.schedule(new TimerTask() {
+                            @Override
+                            public void run() {
+                                doDiscovery();
+                            }
+                        },1000);*/
                     }
                 });
             }

@@ -458,7 +458,9 @@ public class MainActivity extends AppCompatActivity {
         } else {
             fabMenu.collapse();
             Intent intent = new Intent(getApplicationContext(), ScanActivity.class);
-            startActivity(intent);
+            Intent i = new Intent(getApplicationContext(), TestService.class);
+            stopService(i);
+            startActivityForResult(intent,105);
         }
     }
 
@@ -479,8 +481,11 @@ public class MainActivity extends AppCompatActivity {
             //Opening Search Bluetooth Activity
             case 101 : {
                 if(resultCode==RESULT_OK){
+                    fabMenu.collapse();
                     Intent intent = new Intent(getApplicationContext(), ScanActivity.class);
-                    startActivity(intent);
+                    Intent i = new Intent(getApplicationContext(), TestService.class);
+                    stopService(i);
+                    startActivityForResult(intent,105);
                 } else if(resultCode==RESULT_CANCELED){
                     Toast.makeText(getApplicationContext(),getString(R.string.main_activity_cannot_open_bluetooth), Toast.LENGTH_SHORT).show();
                 }
@@ -519,6 +524,20 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }
+            //Opening Scan Activity
+            case 105: {
+                if(sp.getBoolean("protected",false)){
+                    Timer t = new Timer();
+                    t.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            Intent i = new Intent(getApplicationContext(), TestService.class);
+                            startService(i);
+                        }
+                    },1000);
+                }
+                break;
+            }
         }
     }
 
@@ -540,7 +559,7 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 userEnableList.add(user);
             }
-            System.out.println(entry.getKey() + " : " + entry.getValue().toString());
+            //System.out.println(entry.getKey() + " : " + entry.getValue().toString());
         }
 
         enableAdapter = new CustomAdapter(MainActivity.this, userEnableList);
@@ -556,6 +575,7 @@ public class MainActivity extends AppCompatActivity {
         editor.putBoolean("protected",true);
         editor.apply();
         Intent i = new Intent(getApplicationContext(), TestService.class);
+        stopService(i);
         startService(i);
     }
 
